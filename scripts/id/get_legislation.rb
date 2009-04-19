@@ -1,10 +1,5 @@
 #!/usr/bin/ruby
 
-###############################################################################
-# Idaho Legislature Scraper                                                   #
-# Peter Rauchfuss (p.rauchfuss@gmail.com)                                     #
-# 04/05/09     pr                                                             #
-###############################################################################
 
 require 'rubygems'
 require 'hpricot'
@@ -21,7 +16,6 @@ $fVersions  = File.new("bill_version.csv", File::CREAT|File::RDWR)
 $fSponsors  = File.new("sponsorship.csv", File::CREAT|File::RDWR)
 $fActions  = File.new("action.csv", File::CREAT|File::RDWR)
 
-###############################################################################
 def parse_sponsors(sponsor_text)
    sponsors=[]
    sponsor_text=$1 if sponsor_text =~ /by (.*)/
@@ -34,7 +28,7 @@ def parse_sponsors(sponsor_text)
    end
    return sponsors
 end
-###############################################################################
+
 def parse_actions(action_docs)
    actions=[]
    action_docs.select{|tr| (tr/'td[2]').inner_text =~ %r!\d{2}/\d{2}!}.each do |tr|
@@ -45,7 +39,7 @@ def parse_actions(action_docs)
    end
    return actions
 end
-###############################################################################
+
 def parse_versions(bill_doc)
    versions=[]
    (bill_doc/'a').select{|a| a['id'] =~ /^(H|S)\d{4}(E\d)?$/}.each do |a|
@@ -56,7 +50,7 @@ def parse_versions(bill_doc)
    end
    return versions
 end
-###############################################################################
+
 def scrape_bill_page(url,bill_id,chamber)
    open(url) do |bill_page|
    
@@ -106,7 +100,6 @@ def scrape_bill_page(url,bill_id,chamber)
    end
 end
 
-###############################################################################
 #main script
 open( "http://www.legislature.idaho.gov/"+
       "legislation/#{$year}/minidata.htm") do |page|
